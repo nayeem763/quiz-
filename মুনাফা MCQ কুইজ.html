@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8"><title>মুনাফা MCQ কুইজ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f3f0ff;--card:#fff;--tx:#1e1b3a;--mu:#6b6890;--pr:#6c47ff;--ok:#12b76a;--okb:#e6f9f0;--no:#f04438;--nob:#fdecea;--bd:#e3dffa;--exb:#fff7e6;--exc:#b54708}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#14112b;--card:#201c42;--tx:#f1efff;--mu:#a7a3d0;--pr:#9b82ff;--okb:#10382b;--nob:#431c1c;--bd:#352f66;--exb:#3a2f12;--exc:#fdb022}}
+*{box-sizing:border-box}html{scroll-padding-top:90px}
+body{margin:0;font-family:'Hind Siliguri','Noto Sans Bengali',system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+.hero{background:linear-gradient(135deg,#6c47ff,#e84393);color:#fff;padding:28px 18px 56px;text-align:center}
+.hero h1{margin:0 0 6px;font-size:1.7rem}.hero p{margin:0;opacity:.9}
+.wrap{max-width:720px;margin:-36px auto 40px;padding:0 14px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px 14px;box-shadow:0 6px 20px rgba(80,50,200,.15);margin-bottom:14px}
+.tm{font-size:1.3rem;font-weight:700;color:var(--pr);font-variant-numeric:tabular-nums}.tm.low{color:var(--no);animation:p 1s infinite}
+@keyframes p{50%{opacity:.5}}
+.pg{flex:1;height:8px;background:var(--bd);border-radius:9px;overflow:hidden}.pg i{display:block;height:100%;width:0;background:linear-gradient(90deg,#6c47ff,#e84393);transition:.3s}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+.q{font-weight:600;margin:0 0 12px;line-height:1.6}.q b{display:inline-block;background:var(--pr);color:#fff;border-radius:8px;padding:0 9px;margin-right:6px}
+.o{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:transparent;border:2px solid var(--bd);border-radius:12px;padding:10px 12px;margin-bottom:8px;cursor:pointer;transition:.15s}
+.o:hover:not(:disabled){border-color:var(--pr);transform:translateX(3px)}
+.o:disabled{cursor:not-allowed}.o.ok{background:var(--okb);border-color:var(--ok)}.o.no{background:var(--nob);border-color:var(--no)}
+.o span{display:inline-block;width:26px;color:var(--pr);font-weight:700}
+.ex{margin-top:10px;border-radius:12px;padding:12px 14px;line-height:1.8;font-size:.95rem;animation:in .3s}
+@keyframes in{from{opacity:0;transform:translateY(-6px)}}
+.ex.w{background:var(--exb);border-left:5px solid #f79009}.ex.w h4{margin:0 0 4px;color:var(--exc)}
+.ex.g{background:var(--okb);border-left:5px solid var(--ok);font-weight:600}
+.ex code{background:rgba(108,71,255,.14);padding:1px 7px;border-radius:6px;font-family:inherit;font-weight:700}
+.ex .t{margin-top:6px;padding-top:6px;border-top:1px dashed #f79009;color:var(--exc);font-weight:600}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:14px;font:inherit;font-size:1.1rem;font-weight:700;color:#fff;background:linear-gradient(135deg,#6c47ff,#e84393);cursor:pointer}
+.start{text-align:center}.start ul{text-align:left;color:var(--mu);line-height:1.9}
+.fm{background:var(--bg);border-radius:12px;padding:10px;margin:10px 0 16px;line-height:1.9;font-weight:600}
+.sc{font-size:3rem;font-weight:800;color:var(--pr)}.res{text-align:center}
+.hide{display:none}
+</style></head><body>
+<div class="hero"><h1>📈 মুনাফা MCQ কুইজ</h1><p>সরল মুনাফা • চক্রবৃদ্ধি মুনাফা • মিশ্রধন</p></div>
+<div class="wrap">
+<div id="start" class="card start"><h2>নিয়মাবলি</h2>
+<div class="fm">I = Pnr &nbsp;|&nbsp; A = P + I = P(1+nr)<br>চক্রবৃদ্ধি: A = P(1+r)ⁿ<br>r = টাকায় হার (৫% = ০.০৫)</div>
+<ul><li>মোট প্রশ্ন: ৩০ টি (কিছু প্রশ্নে ফাঁদ আছে! ⚠️)</li><li>সময়: ৪৫ মিনিট</li><li>একবার উত্তর দিলে আর বদলানো যাবে না</li><li>ভুল করলে সাথে সাথে ব্যাখ্যা দেখতে পাবে</li></ul><button class="btn" onclick="go()">🚀 কুইজ শুরু করো</button></div>
+<div id="quiz" class="hide"><div class="bar"><div class="tm" id="tm">45:00</div><div class="pg"><i id="pg"></i></div><div id="ct">০/৩০</div></div><div id="qs"></div><button class="btn" id="sb" onclick="fin()">✅ জমা দাও</button></div>
+<div id="res" class="card res hide"></div>
+</div>
+<script>
+const bn=s=>String(s).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+// [প্রশ্ন, সঠিক, ফাঁদ১, ফাঁদ২, ফাঁদ৩, ব্যাখ্যা, ফাঁদ-টিপ]
+const D=[
+["সরল মুনাফা নির্ণয়ের সূত্র কোনটি?","I = Pnr","I = P + n + r","I = Pn/r","I = P/(nr)","মুনাফা = আসল × সময় × হার।<br>এখানে <code>r</code> হলো ১ টাকার ১ বছরের মুনাফা (যেমন ৫% = ০.০৫)।","সূত্রে সংখ্যা নয়, গুণ হয়!"],
+["১০০০ টাকার ৫% হারে ২ বছরের সরল মুনাফা কত?","১০০ টাকা","৫০ টাকা","১০০০০ টাকা","১১০০ টাকা","r = ৫% = ০.০৫<br>I = ১০০০ × ২ × ০.০৫ = <code>১০০ টাকা</code>","৫০ = সময় (২ বছর) ধরতে ভুলে গেছ; ১১০০ = এটা মিশ্রধন, মুনাফা নয়।"],
+["৫০০ টাকার ১০% হারে ৪ বছরের সরল মুনাফা কত?","২০০ টাকা","৫০ টাকা","২০০০ টাকা","৭০০ টাকা","r = ০.১<br>I = ৫০০ × ৪ × ০.১ = <code>২০০ টাকা</code>","৭০০ হলো মিশ্রধন। প্রশ্নে কী চাওয়া হয়েছে তা দেখো!"],
+["২০০০ টাকার ৬% হারে ৩ বছরের সরল মুনাফা কত?","৩৬০ টাকা","১২০ টাকা","২৩৬০ টাকা","৩৬০০ টাকা","r = ০.০৬<br>I = ২০০০ × ৩ × ০.০৬ = <code>৩৬০ টাকা</code>","১২০ = মাত্র ১ বছরের মুনাফা; ২৩৬০ = মিশ্রধন।"],
+["১২০০ টাকার ১০% সরল হারে ৩ বছরে মিশ্রধন কত?","১৫৬০ টাকা","৩৬০ টাকা","১৫৯৭.২ টাকা","১৩২০ টাকা","I = ১২০০ × ৩ × ০.১ = ৩৬০<br>A = P + I = ১২০০ + ৩৬০ = <code>১৫৬০ টাকা</code>","৩৬০ শুধু মুনাফা। ১৫৯৭.২ চক্রবৃদ্ধির উত্তর — প্রশ্নে 'সরল' লেখা!"],
+["৮০০ টাকায় ২ বছরে সরল মুনাফা ১২৮ টাকা হলে বার্ষিক হার কত?","৮%","০.৮%","১৬%","৬৪%","r = I/(Pn) = ১২৮/(৮০০×২) = ১২৮/১৬০০ = ০.০৮<br>০.০৮ = <code>৮%</code>","১৬% পেলে বুঝবে ২ বছর দিয়ে ভাগ করোনি।"],
+["৫% সরল হারে ৪ বছরে মুনাফা ৩০০ টাকা হলে আসল কত?","১৫০০ টাকা","৬০ টাকা","৬০০০ টাকা","১২০০ টাকা","P = I/(nr) = ৩০০/(৪×০.০৫) = ৩০০/০.২ = <code>১৫০০ টাকা</code>","৬০০০ = শুধু r দিয়ে ভাগ করেছ, n ভুলে গেছ। ৬০ = গুণ করে ফেলেছ!"],
+["১০% সরল হারে কত বছরে ১০০০ টাকার মুনাফা ৩০০ টাকা হবে?","৩ বছর","৩০ বছর","১০ বছর","২ বছর","n = I/(Pr) = ৩০০/(১০০০×০.১) = ৩০০/১০০ = <code>৩ বছর</code>","৩০ হলে r=০.০১ ধরেছ — হার ০.১, ০.০১ নয়!"],
+["১০% সরল হারে কত বছরে আসল দ্বিগুণ হবে?","১০ বছর","৫ বছর","২০ বছর","১০০ বছর","আসল দ্বিগুণ মানে মুনাফা I = P<br>P = P×n×০.১ ⇒ n = ১/০.১ = <code>১০ বছর</code>","দ্বিগুণ হতে মুনাফা = আসলের ১ গুণ (২ গুণ নয়)।"],
+["সরল হারে কোনো আসল ৮ বছরে দ্বিগুণ হলে বার্ষিক হার কত?","১২.৫%","৮%","১৬%","০.১২৫%","I = P ⇒ P = P×৮×r ⇒ r = ১/৮ = ০.১২৫ = <code>১২.৫%</code>","৮% নয়, কারণ r = ১/n, n নিজেই হার নয়।"],
+["৪০০০ টাকার ১২% সরল হারে ৬ মাসের মুনাফা কত?","২৪০ টাকা","৪৮০ টাকা","২৮৮০ টাকা","১২০ টাকা","৬ মাস = ০.৫ বছর<br>I = ৪০০০ × ০.৫ × ০.১২ = <code>২৪০ টাকা</code>","হার বার্ষিক, তাই মাসকে বছরে বদলাতে হবে! ২৮৮০ = n=৬ বসিয়েছ।"],
+["চক্রবৃদ্ধি মিশ্রধনের সূত্র কোনটি?","A = P(1+r)ⁿ","A = P(1+nr)","A = P(1+r)×n","A = P + rⁿ","চক্রবৃদ্ধিতে ঘাত (power) হয়: <code>A = P(1+r)ⁿ</code><br>A = P(1+nr) হলো সরল মিশ্রধন।","সরল ও চক্রবৃদ্ধির সূত্র গুলিয়ে ফেলো না!"],
+["চক্রবৃদ্ধি মুনাফা = ?","A − P","A + P","P − A","A × P","মুনাফা = মোট পাওনা − আসল = <code>A − P</code>","A হলো মিশ্রধন, মুনাফা নয়।"],
+["১০০০ টাকার ১০% চক্রবৃদ্ধি হারে ২ বছরের মিশ্রধন কত?","১২১০ টাকা","১২০০ টাকা","১১০০ টাকা","২১০ টাকা","A = ১০০০(১.১)² = ১০০০ × ১.২১ = <code>১২১০ টাকা</code>","১২০০ = সরল হারের মিশ্রধন (১০০০ + ২০০)।"],
+["১০০০ টাকার ১০% চক্রবৃদ্ধি হারে ২ বছরের চক্রবৃদ্ধি মুনাফা কত?","২১০ টাকা","২০০ টাকা","১২১০ টাকা","১১০ টাকা","A = ১২১০<br>মুনাফা = ১২১০ − ১০০০ = <code>২১০ টাকা</code>","১২১০ = মিশ্রধন; ২০০ = সরল মুনাফা।"],
+["২০০০ টাকার ১০% হারে ২ বছরের চক্রবৃদ্ধি ও সরল মুনাফার পার্থক্য কত?","২০ টাকা","৪০০ টাকা","৪২০ টাকা","২০০ টাকা","সরল = ২০০০×২×০.১ = ৪০০<br>চক্র: ২০০০×১.২১ = ২৪২০ → মুনাফা ৪২০<br>পার্থক্য = ৪২০ − ৪০০ = <code>২০ টাকা</code>","পার্থক্য চেয়েছে — কোনো একটার মান নয়!"],
+["১ বছরের জন্য সরল ও চক্রবৃদ্ধি মুনাফার সম্পর্ক কী?","সমান","চক্রবৃদ্ধি বেশি","সরল বেশি","নির্ণয় করা যায় না","n = ১ হলে (1+r)¹ = 1+r = 1+1×r<br>দুই সূত্রই একই মান দেয় — তাই <code>সমান</code>।","চক্রবৃদ্ধি বেশি হয় ২ বছর বা তার বেশিতে।"],
+["৫০০০ টাকার ২০% চক্রবৃদ্ধি হারে ২ বছরের মিশ্রধন কত?","৭২০০ টাকা","৭০০০ টাকা","৬০০০ টাকা","৭৪০০ টাকা","A = ৫০০০ × (১.২)² = ৫০০০ × ১.৪৪ = <code>৭২০০ টাকা</code>","৭০০০ = সরল হারের মিশ্রধন; ৬০০০ = ১ বছরের।"],
+["৪০০০ টাকার ৫% চক্রবৃদ্ধি হারে ২ বছরের চক্রবৃদ্ধি মুনাফা কত?","৪১০ টাকা","৪০০ টাকা","৪৪১০ টাকা","২০০ টাকা","A = ৪০০০ × (১.০৫)² = ৪০০০ × ১.১০২৫ = ৪৪১০<br>মুনাফা = ৪৪১০ − ৪০০০ = <code>৪১০ টাকা</code>","৪৪১০ = মিশ্রধন; ৪০০ = সরল মুনাফা।"],
+["সরল মুনাফায় সময় বাড়লে মুনাফা কীভাবে বাড়ে?","সমান পরিমাণে (সমহারে)","ক্রমশ বেশি বেশি করে","কমতে থাকে","একই থাকে","I = Pnr — n বাড়লে I সমানুপাতে বাড়ে। প্রতি বছর মুনাফা একই = <code>Pr</code>।","ক্রমবর্ধমান বৃদ্ধি হয় চক্রবৃদ্ধিতে।"],
+["চক্রবৃদ্ধিতে প্রতি বছরের মুনাফা কীসের উপর হিসাব হয়?","আগের বছরের মিশ্রধনের","সবসময় প্রথম আসলের","শুধু হারের","শুধু সময়ের","চক্রবৃদ্ধিতে আগের বছরের <code>মুনাফা আসলের সাথে যোগ</code> হয়ে নতুন আসল তৈরি হয়।","সবসময় প্রথম আসলের উপর হিসাব হলে সেটা সরল মুনাফা!"],
+["সরল মিশ্রধনের সূত্র কোনটি?","A = P(1+nr)","A = P(1+r)ⁿ","A = P + n + r","A = Pnr","A = P + I = P + Pnr = <code>P(1+nr)</code>","Pnr হলো শুধু মুনাফা (I), মিশ্রধন নয়।"],
+["৩০০০ টাকার বার্ষিক ৫% সরল হারে ৬ মাসের মুনাফা কত?","৭৫ টাকা","১৫০ টাকা","৯০০ টাকা","৪৫০ টাকা","n = ৬/১২ = ০.৫<br>I = ৩০০০ × ০.৫ × ০.০৫ = <code>৭৫ টাকা</code>","১৫০ = পুরো ১ বছর ধরেছ।"],
+["২০০ টাকার ১৫% সরল হারে ৩ বছরের মুনাফা কত?","৯০ টাকা","৩০ টাকা","২৯০ টাকা","৯০০০ টাকা","r = ০.১৫<br>I = ২০০ × ৩ × ০.১৫ = <code>৯০ টাকা</code>","২৯০ = মিশ্রধন। ৯০০০ = r=১৫ বসিয়েছ!"],
+["P টাকার বার্ষিক r হারে ১ বছরের সরল মুনাফা কত?","Pr","P/r","P + r","Pnr","n = ১ হলে I = P×১×r = <code>Pr</code>","Pnr সঠিক সাধারণ সূত্র, কিন্তু ১ বছরে n=১ বসে Pr হয়।"],
+["৬% সরল হারে ৩ বছরে মুনাফা ৪৫০ টাকা হলে আসল কত?","২৫০০ টাকা","৭৫০০ টাকা","৮১ টাকা","২৫০০০ টাকা","P = I/(nr) = ৪৫০/(৩×০.০৬) = ৪৫০/০.১৮ = <code>২৫০০ টাকা</code>","৭৫০০ = n দিয়ে ভাগ করোনি; ৮১ = গুণ করেছ!"],
+["৫০০০ টাকার ১০% সরল হারে ২ বছরের মিশ্রধন কত?","৬০০০ টাকা","১০০০ টাকা","৬০৫০ টাকা","৫৫০০ টাকা","I = ৫০০০×২×০.১ = ১০০০<br>A = ৫০০০ + ১০০০ = <code>৬০০০ টাকা</code>","৬০৫০ = চক্রবৃদ্ধির মিশ্রধন; ৫৫০০ = ১ বছরের।"],
+["২৫০০ টাকার ৪% চক্রবৃদ্ধি হারে ২ বছরের মিশ্রধন কত?","২৭০৪ টাকা","২৭০০ টাকা","২০৪ টাকা","২৬০০ টাকা","A = ২৫০০ × (১.০৪)² = ২৫০০ × ১.০৮১৬ = <code>২৭০৪ টাকা</code>","২৭০০ = সরল (২৫০০+২০০); ২০৪ = চক্রবৃদ্ধি মুনাফা।"],
+["সূত্রে বসানোর সময় ৫% হারের r এর মান কত বসবে?","০.০৫","৫","০.৫","৫০","r হলো টাকায় হার: ৫% = ৫/১০০ = <code>০.০৫</code>","সরাসরি ৫ বসালে উত্তর ১০০ গুণ বড় হয়ে যাবে!"],
+["১০০০ টাকার ১০% হারে ২ বছরে চক্রবৃদ্ধি মুনাফা সরল মুনাফার চেয়ে কত বেশি?","১০ টাকা","২১০ টাকা","২০০ টাকা","১০০ টাকা","সরল = ১০০০×২×০.১ = ২০০<br>চক্রবৃদ্ধি = ১২১০ − ১০০০ = ২১০<br>পার্থক্য = ২১০ − ২০০ = <code>১০ টাকা</code>","২১০ ও ২০০ আলাদা মুনাফা — পার্থক্য চাওয়া হয়েছে।"]
+];
+const Q=D.map(d=>{const o=d.slice(1,5).map((t,i)=>({t,c:i==0}));for(let i=3;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]]}return{q:d[0],o,e:d[5],t:d[6]}});
+const A=new Array(30).fill(null);let left=2700,iv,done=false;
+const $=id=>document.getElementById(id);
+function go(){$('start').classList.add('hide');$('quiz').classList.remove('hide');
+$('qs').innerHTML=Q.map((x,i)=>`<div class="card"><p class="q"><b>${bn(i+1)}</b>${bn(x.q)}</p>${x.o.map((p,j)=>`<button class="o" id="o${i}_${j}" onclick="pick(${i},${j})"><span>${'কখগঘ'[j]}.</span>${bn(p.t)}</button>`).join('')}<div id="e${i}"></div></div>`).join('');
+tick();iv=setInterval(tick,1000)}
+function tick(){const m=Math.floor(left/60),s=left%60;$('tm').textContent='⏱ '+bn(String(m).padStart(2,'0'))+':'+bn(String(s).padStart(2,'0'));$('tm').classList.toggle('low',left<300);if(left--<=0)fin(true)}
+function ex(i,st){const x=Q[i];$('e'+i).innerHTML=st=='g'?`<div class="ex g">🎉 সঠিক! চমৎকার!</div>`:`<div class="ex w"><h4>${st=='w'?'❌ ভুল হয়েছে!':'⏭ উত্তর দাওনি'} 💡 সঠিক ব্যাখ্যা:</h4>${bn(x.e)}</div>`}
+function pick(i,j){if(A[i]!==null||done)return;A[i]=j;
+Q[i].o.forEach((p,k)=>{const b=$(`o${i}_${k}`);b.disabled=true;if(p.c)b.classList.add('ok');else if(k==j)b.classList.add('no')});
+ex(i,Q[i].o[j].c?'g':'w');
+const n=A.filter(a=>a!==null).length;$('ct').textContent=bn(n)+'/'+bn(30);$('pg').style.width=n/30*100+'%'}
+function fin(auto){if(done)return;const n=A.filter(a=>a!==null).length;
+if(!auto&&left>0&&n<30&&!confirm(`আপনি ${bn(30-n)} টি প্রশ্নের উত্তর দেননি। জমা দিতে চান?`))return;
+done=true;clearInterval(iv);
+Q.forEach((x,i)=>{x.o.forEach((p,k)=>{const b=$(`o${i}_${k}`);b.disabled=true;if(p.c)b.classList.add('ok')});if(A[i]===null)ex(i,'s')});
+const sc=Q.filter((x,i)=>A[i]!==null&&x.o[A[i]].c).length,wr=n-sc,used=2700-Math.max(left,0);
+const g=sc>=27?'🏆 অসাধারণ!':sc>=21?'🎉 খুব ভালো!':sc>=15?'👍 ভালো, আরও অনুশীলন করো':'📚 আবার চেষ্টা করো';
+const r=$('res');r.classList.remove('hide');
+r.innerHTML=`<h2>ফলাফল</h2><div class="sc">${bn(sc)}/${bn(30)}</div><p>${g}</p><p>✅ সঠিক: ${bn(sc)} &nbsp; ❌ ভুল: ${bn(wr)} &nbsp; ⏭ বাদ: ${bn(30-n)}</p><p>ব্যয়িত সময়: ${bn(Math.floor(used/60))} মিনিট ${bn(used%60)} সেকেন্ড</p><button class="btn" onclick="location.reload()">🔄 আবার দাও</button>`;
+$('sb').classList.add('hide');r.scrollIntoView({behavior:'smooth'})}
+</script></body></html>
