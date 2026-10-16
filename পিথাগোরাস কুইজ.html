@@ -1,0 +1,476 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>পিথাগোরাস কুইজ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;600;700;800&family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: graph-paper page, one centered column. Hero shows the 3-4-5 triangle with its three squares; the same teal / amber / violet colour the legs and hypotenuse in every figure. */
+:root{
+  --bg:#EDF1F8; --grid:rgba(20,32,57,.05); --surface:#FFFFFF; --surface2:#F1F4FA;
+  --ink:#142039; --muted:#58647F; --line:#D3DBEB;
+  --a:#0E9AA7; --b:#F2A100; --c:#5B3FD9; --c-soft:#ECE8FC; --on-c:#FFFFFF;
+  --good:#12844B; --good-soft:#E0F4EA; --bad:#C42843; --bad-soft:#FCE6EA; --warn:#9A6200; --warn-soft:#FFF0D2;
+  --font-display:"Baloo Da 2","Hind Siliguri","Noto Sans Bengali","Segoe UI",system-ui,sans-serif;
+  --font-body:"Hind Siliguri","Noto Sans Bengali","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1325; --grid:rgba(190,205,255,.05); --surface:#161F37; --surface2:#1E2845;
+    --ink:#E9EDF9; --muted:#9BA7C6; --line:#2B3658;
+    --a:#35C6D1; --b:#FFC24A; --c:#9D8CFF; --c-soft:#2A2459; --on-c:#12082F;
+    --good:#4ADE9A; --good-soft:#143A2A; --bad:#FF7A90; --bad-soft:#42202B; --warn:#FFC24A; --warn-soft:#3E3110;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1325; --grid:rgba(190,205,255,.05); --surface:#161F37; --surface2:#1E2845;
+  --ink:#E9EDF9; --muted:#9BA7C6; --line:#2B3658;
+  --a:#35C6D1; --b:#FFC24A; --c:#9D8CFF; --c-soft:#2A2459; --on-c:#12082F;
+  --good:#4ADE9A; --good-soft:#143A2A; --bad:#FF7A90; --bad-soft:#42202B; --warn:#FFC24A; --warn-soft:#3E3110;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; font-family:var(--font-body); font-size:16px; line-height:1.65; color:var(--ink);
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  padding-block:16px 56px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+h1,h2,h3,p{margin:0}
+.wrap{max-width:720px;margin:0 auto;display:grid;gap:16px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;min-width:0}
+.btn{font:inherit;font-weight:600;border-radius:12px;padding:12px 20px;min-height:48px;border:1.5px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer;transition:transform .12s,opacity .12s}
+.btn:active{transform:scale(.98)}
+.btn.go{background:var(--c);border-color:var(--c);color:var(--on-c)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn:focus-visible,.opt:focus-visible,.chip:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>.btn{flex:1 1 140px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:24px;align-items:center;padding:24px}
+.hero svg{width:100%;height:auto;max-width:200px;display:block;margin:0 auto}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;font-weight:600;color:var(--c);text-transform:uppercase}
+.hero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.9rem,6.5vw,2.8rem);line-height:1.15;text-wrap:balance;margin-top:4px}
+.eq{font-family:var(--font-display);font-weight:700;font-size:1.35rem;margin-top:10px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.eq i{font-style:normal;padding:0 2px}
+.eq .ea{color:var(--a)} .eq .eb{color:var(--b)} .eq .ec{color:var(--c)}
+.sub{color:var(--muted);margin-top:8px}
+.sq{transform-box:fill-box;transform-origin:center;animation:pop .7s cubic-bezier(.2,.8,.2,1) both}
+.sq2{animation-delay:.15s}.sq3{animation-delay:.3s}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.hn{font:800 20px var(--font-display);fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+@media (max-width:520px){.hero{grid-template-columns:1fr;gap:16px}.hero svg{max-width:170px}}
+
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.fact{background:var(--surface2);border-radius:12px;padding:12px;text-align:center}
+.fact b{display:block;font-family:var(--font-display);font-size:1.5rem;line-height:1.2}
+.fact span{font-size:.85rem;color:var(--muted)}
+.rules{margin:0;padding-left:1.2em;color:var(--muted);display:grid;gap:4px}
+label.lb{display:block;font-weight:600;margin-bottom:6px}
+input[type=text]{font:inherit;width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
+
+/* quiz */
+.qbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 16px;display:grid;gap:8px}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.qno{font-family:var(--font-display);font-weight:700;font-size:1.1rem}
+.timer{display:flex;gap:6px;align-items:baseline;color:var(--muted)}
+.timer b{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);font-variant-numeric:tabular-nums}
+.timer.low b{color:var(--bad)}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--c);border-radius:inherit;transition:width .3s}
+.qmeta{font-size:.85rem;color:var(--muted)}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;color:var(--muted);background:var(--surface2);border-radius:99px;padding:3px 12px}
+.tag i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.qtext{font-family:var(--font-display);font-weight:600;font-size:1.3rem;line-height:1.5;margin-top:12px;text-wrap:pretty}
+.figwrap{margin-top:14px;background:var(--surface2);border-radius:14px;padding:12px;display:grid;gap:6px;justify-items:center}
+.fig{width:100%;max-width:300px;height:auto;display:block}
+.fig path{stroke-linecap:round;stroke-linejoin:round}
+.s-a{stroke:var(--a);stroke-width:4;fill:none}.s-b{stroke:var(--b);stroke-width:4;fill:none}.s-c{stroke:var(--c);stroke-width:4;fill:none}
+.fl{font:600 14px var(--font-body);fill:var(--ink)}
+.fl.q{font:800 22px var(--font-display);fill:var(--c)}
+.fleg{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:0;padding:0;list-style:none;font-size:.82rem;color:var(--muted)}
+.fleg li{display:flex;align-items:center;gap:6px}
+.fleg i{width:18px;height:4px;border-radius:2px;display:block}
+.fnote{font-size:.78rem;color:var(--muted)}
+.opts{display:grid;gap:10px;margin-top:16px}
+.opt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:10px 14px;min-height:54px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--c)}
+.k{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;background:var(--surface2);color:var(--muted)}
+.ot{min-width:0;overflow-wrap:anywhere}
+.opt[aria-checked="true"]{border-color:var(--c);background:var(--c-soft)}
+.opt[aria-checked="true"] .k{background:var(--c);color:var(--on-c)}
+.nav{display:flex;gap:12px;margin-top:18px}
+.nav .btn{flex:1}
+.pal{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:8px;margin-top:12px}
+.chip{font:inherit;font-weight:600;height:40px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip.done{background:var(--c-soft);border-color:var(--c)}
+.chip.cur{background:var(--c);border-color:var(--c);color:var(--on-c)}
+.h3{font-family:var(--font-display);font-weight:700;font-size:1.15rem}
+.confirm{border-color:var(--c);display:grid;gap:12px}
+
+/* result */
+.score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center}
+.ring{width:130px;height:130px;position:relative}
+.ring svg{width:100%;height:100%;display:block}
+.ring .rt{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring b{font-family:var(--font-display);font-size:1.9rem;line-height:1.1}
+.ring span{font-size:.85rem;color:var(--muted)}
+.score h2{font-family:var(--font-display);font-weight:800;font-size:1.6rem;line-height:1.25;text-wrap:balance}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
+.stat{border-radius:12px;padding:10px;text-align:center;background:var(--surface2)}
+.stat b{display:block;font-family:var(--font-display);font-size:1.4rem;line-height:1.2}
+.stat span{font-size:.82rem;color:var(--muted)}
+.stat.g b{color:var(--good)}.stat.r b{color:var(--bad)}
+@media (max-width:480px){.score{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.tp{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.tp:first-of-type{border-top:0}
+.tp .nm{font-weight:500;min-width:0}
+.tp .meter{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.tp .meter i{display:block;height:100%;border-radius:inherit}
+.pill{font-size:.78rem;font-weight:600;border-radius:99px;padding:2px 10px;white-space:nowrap}
+.pill.s{background:var(--good-soft);color:var(--good)}.pill.m{background:var(--warn-soft);color:var(--warn)}.pill.w{background:var(--bad-soft);color:var(--bad)}
+@media (max-width:480px){.tp{grid-template-columns:minmax(0,1fr) auto}.tp .meter{grid-column:1/-1;order:3}}
+.tips{display:grid;gap:10px;margin-top:14px}
+.tip{background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:.95rem}
+.tip b{display:block}
+details.rv{border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+details.rv+details.rv{margin-top:10px}
+details.rv summary{cursor:pointer;list-style:none;padding:12px 14px;display:flex;gap:10px;align-items:center;font-weight:600}
+details.rv summary::-webkit-details-marker{display:none}
+.rvb{padding:0 14px 14px;display:grid;gap:10px}
+.rvb .qt{font-family:var(--font-display);font-weight:600;font-size:1.1rem;line-height:1.5}
+.ro{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:8px 12px}
+.ro.ok{border-color:var(--good);background:var(--good-soft)}
+.ro.no{border-color:var(--bad);background:var(--bad-soft)}
+.ro small{margin-left:auto;font-weight:600;white-space:nowrap}
+.ro.ok small{color:var(--good)}.ro.no small{color:var(--bad)}
+.exp{background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:.95rem}
+.exp b{display:block;margin-bottom:2px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-weight:600;z-index:20;max-width:calc(100% - 32px)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<main class="wrap" id="app"></main>
+
+<script>
+const $app = document.getElementById('app');
+const bn = s => String(s).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LET = ['ক','খ','গ','ঘ'];
+
+const TOPICS = {
+  t1:{n:'ধারণা ও সূত্র', tip:'অতিভুজ সবসময় সমকোণের বিপরীতে থাকে এবং সবচেয়ে বড় বাহু হয়। সূত্র: c² = a² + b²।'},
+  t2:{n:'অতিভুজ নির্ণয়', tip:'দুই বাহুর বর্গ যোগ করো, তারপর বর্গমূল নাও। যোগফল পেয়েই থেমে যেয়ো না।'},
+  t3:{n:'বাহু নির্ণয়', tip:'অতিভুজ জানা থাকলে বর্গ বিয়োগ করো: a² = c² − b²। অনুপাত দেওয়া থাকলে 5k, 12k এভাবে ধরো।'},
+  t4:{n:'বিপরীত উপপাদ্য', tip:'বড় বাহুর বর্গ = অপর দুটির বর্গের যোগফল হলে সমকোণী। বর্গ বড় হলে স্থূলকোণী, ছোট হলে সূক্ষ্মকোণী।'},
+  t5:{n:'পিথাগোরীয় ত্রয়ী', tip:'পরিচিত ত্রয়ী মনে রাখো: (৩, ৪, ৫), (৫, ১২, ১৩), (৮, ১৫, ১৭), (৭, ২৪, ২৫)। এগুলোর গুণিতকও ত্রয়ী।'},
+  t6:{n:'কর্ণ ও আকৃতি', tip:'কর্ণ আয়তক্ষেত্র বা বর্গকে সমকোণী ত্রিভুজে ভাগ করে। রম্বসের কর্ণ পরস্পরকে সমকোণে সমদ্বিখণ্ডিত করে, তাই অর্ধেক কর্ণ নিয়ে হিসাব করো।'},
+  t7:{n:'বাস্তব সমস্যা', tip:'আগে ছবি আঁকো, কোনটি অতিভুজ তা ঠিক করো, তারপর সূত্র বসাও। পথের মোট দৈর্ঘ্য আর সরল দূরত্ব এক নয়।'},
+  t8:{n:'উচ্চতা ও দূরত্ব', tip:'উচ্চতা টানলে ভূমি দুই ভাগ হয়। ভূমির অর্ধেক নিয়ে সমকোণী ত্রিভুজ বানাও। দুই বিন্দুর দূরত্বে x ও y এর পার্থক্যের বর্গ যোগ করো।'}
+};
+
+const Q = [
+ {t:'t1', q:'সমকোণী ত্রিভুজের সমকোণের বিপরীত বাহুকে কী বলে?', o:['অতিভুজ','ভূমি','লম্ব','মধ্যমা'], a:0,
+  e:'সমকোণের বিপরীত বাহুটিই ত্রিভুজের সবচেয়ে বড় বাহু। একে অতিভুজ (hypotenuse) বলে।'},
+ {t:'t1', q:'সমকোণী ত্রিভুজের অতিভুজ c এবং অপর দুই বাহু a ও b হলে পিথাগোরাসের উপপাদ্য অনুযায়ী কোনটি সঠিক?', o:['c² = a² + b²','a² = b² + c²','c = a + b','c² = a² − b²'], a:0,
+  e:'অতিভুজের বর্গ = অপর দুই বাহুর বর্গের সমষ্টি। c = a + b কখনো হয় না, কারণ ত্রিভুজের দুই বাহুর যোগফল তৃতীয় বাহুর চেয়ে বড় হয়।'},
+ {t:'t2', f:{l:'৩ সেমি', b:'৪ সেমি', h:'?'}, q:'চিত্রে সমকোণী ত্রিভুজের লম্ব ৩ সেমি ও ভূমি ৪ সেমি। অতিভুজের দৈর্ঘ্য কত?', o:['৫ সেমি','৬ সেমি','৭ সেমি','২৫ সেমি'], a:0,
+  e:'অতিভুজ² = ৩² + ৪² = ৯ + ১৬ = ২৫। বর্গমূল নিলে অতিভুজ = ৫ সেমি। ২৫ উত্তর নয় কারণ বর্গমূল নেওয়া বাকি থাকে, আর ৭ হলো সরাসরি যোগ করার ভুল।'},
+ {t:'t2', f:{l:'৫ সেমি', b:'১২ সেমি', h:'?'}, q:'চিত্রে লম্ব ৫ সেমি ও ভূমি ১২ সেমি। অতিভুজের দৈর্ঘ্য কত?', o:['১৩ সেমি','১৭ সেমি','১১ সেমি','১৬৯ সেমি'], a:0,
+  e:'অতিভুজ² = ৫² + ১২² = ২৫ + ১৪৪ = ১৬৯, তাই অতিভুজ = ১৩ সেমি।'},
+ {t:'t3', f:{l:'৬ সেমি', b:'?', h:'১০ সেমি'}, q:'চিত্রে অতিভুজ ১০ সেমি এবং লম্ব ৬ সেমি। ভূমির দৈর্ঘ্য কত?', o:['৮ সেমি','৪ সেমি','১২ সেমি','১৬ সেমি'], a:0,
+  e:'ভূমি² = অতিভুজ² − লম্ব² = ১০² − ৬² = ১০০ − ৩৬ = ৬৪। সুতরাং ভূমি = ৮ সেমি। অতিভুজ জানা থাকলে বিয়োগ করতে হয়, যোগ নয়।'},
+ {t:'t3', f:{l:'?', b:'৭ সেমি', h:'২৫ সেমি'}, q:'একটি সমকোণী ত্রিভুজের অতিভুজ ২৫ সেমি এবং একটি বাহু ৭ সেমি। অপর বাহুটির দৈর্ঘ্য কত?', o:['২৪ সেমি','১৮ সেমি','৩২ সেমি','২০ সেমি'], a:0,
+  e:'অপর বাহু² = ২৫² − ৭² = ৬২৫ − ৪৯ = ৫৭৬ = ২৪²। তাই বাহুটি ২৪ সেমি।'},
+ {t:'t4', q:'একটি ত্রিভুজের বাহু তিনটির দৈর্ঘ্য ৯ সেমি, ১২ সেমি ও ১৫ সেমি। ত্রিভুজটি কী ধরনের?', o:['সমকোণী','সূক্ষ্মকোণী','স্থূলকোণী','সমবাহু'], a:0,
+  e:'সবচেয়ে বড় বাহু ১৫। ৯² + ১২² = ৮১ + ১৪৪ = ২২৫ = ১৫²। বিপরীত উপপাদ্য অনুযায়ী ত্রিভুজটি সমকোণী, আর ১৫ সেমি বাহুর বিপরীতে সমকোণ।'},
+ {t:'t4', q:'একটি ত্রিভুজের বাহু ৪ সেমি, ৫ সেমি ও ৬ সেমি। ত্রিভুজটি কী ধরনের?', o:['সমকোণী','সূক্ষ্মকোণী','স্থূলকোণী','সমদ্বিবাহু'], a:1,
+  e:'বড় বাহু ৬ এর বর্গ = ৩৬। অপর দুই বাহুর বর্গের যোগফল = ১৬ + ২৫ = ৪১। ৪১ > ৩৬ হওয়ায় বড় কোণটি ৯০° এর কম, অর্থাৎ ত্রিভুজটি সূক্ষ্মকোণী। যোগফল সমান হলে সমকোণী, কম হলে স্থূলকোণী।'},
+ {t:'t5', q:'নিচের কোন তিনটি সংখ্যা পিথাগোরীয় ত্রয়ী?', o:['(৬, ৯, ১১)','(৮, ১৫, ১৭)','(৭, ১২, ১৫)','(৯, ১১, ১৩)'], a:1,
+  e:'৮² + ১৫² = ৬৪ + ২২৫ = ২৮৯ = ১৭²। অন্যগুলো মেলে না: ৬² + ৯² = ১১৭ (১১² = ১২১), ৭² + ১২² = ১৯৩ (১৫² = ২২৫), ৯² + ১১² = ২০২ (১৩² = ১৬৯)।'},
+ {t:'t5', q:'পিথাগোরীয় ত্রয়ী (৩, ৪, ৫) এর প্রতিটি সংখ্যাকে ৫ দিয়ে গুণ করলে যে তিনটি সংখ্যা পাওয়া যায়, সেটি কোনটি?', o:['(১৫, ২০, ২৫)','(১৫, ২০, ২৪)','(৮, ৯, ১০)','(১৩, ১৪, ১৫)'], a:0,
+  e:'১৫² + ২০² = ২২৫ + ৪০০ = ৬২৫ = ২৫²। কোনো ত্রয়ীর প্রতিটি সংখ্যাকে একই সংখ্যা দিয়ে গুণ করলে নতুন ত্রয়ী পাওয়া যায়।'},
+ {t:'t6', q:'একটি আয়তক্ষেত্রের দৈর্ঘ্য ১২ সেমি ও প্রস্থ ৯ সেমি। এর কর্ণের দৈর্ঘ্য কত?', o:['১৫ সেমি','২১ সেমি','১৩ সেমি','১৮ সেমি'], a:0,
+  e:'কর্ণ আয়তক্ষেত্রকে দুটি সমকোণী ত্রিভুজে ভাগ করে। কর্ণ² = ১২² + ৯² = ১৪৪ + ৮১ = ২২৫, তাই কর্ণ = ১৫ সেমি।'},
+ {t:'t6', q:'একটি বর্গক্ষেত্রের এক বাহুর দৈর্ঘ্য ১০ সেমি। এর কর্ণের দৈর্ঘ্য কত?', o:['১০√২ সেমি','২০ সেমি','১০√৩ সেমি','১০০ সেমি'], a:0,
+  e:'কর্ণ² = ১০² + ১০² = ২০০, তাই কর্ণ = √২০০ = ১০√২ সেমি। যেকোনো বর্গের কর্ণ = বাহু × √২।'},
+ {t:'t7', f:{l:'?', b:'৩ মি.', h:'৫ মি.'}, q:'৫ মিটার লম্বা একটি মই দেয়ালে ঠেকানো আছে। মইয়ের গোড়া দেয়াল থেকে ৩ মিটার দূরে। মইটি দেয়ালের কত উচ্চতায় পৌঁছায়?', o:['৪ মিটার','২ মিটার','৮ মিটার','৩.৫ মিটার'], a:0,
+  e:'মই হলো অতিভুজ (৫ মি.), গোড়ার দূরত্ব ভূমি (৩ মি.)। উচ্চতা² = ৫² − ৩² = ২৫ − ৯ = ১৬, তাই উচ্চতা = ৪ মিটার।'},
+ {t:'t7', q:'রহিম বাড়ি থেকে পশ্চিমে ১৫ কিমি হেঁটে তারপর দক্ষিণে ৮ কিমি গেল। বাড়ি থেকে তার সরলরেখায় দূরত্ব কত?', o:['১৭ কিমি','২৩ কিমি','৭ কিমি','১৯ কিমি'], a:0,
+  e:'পশ্চিম ও দক্ষিণ দিক পরস্পর লম্ব, তাই সমকোণী ত্রিভুজ তৈরি হয়। দূরত্ব² = ১৫² + ৮² = ২২৫ + ৬৪ = ২৮৯, তাই দূরত্ব = ১৭ কিমি। ২৩ হলো পথের মোট দৈর্ঘ্য, সরল দূরত্ব নয়।'},
+ {t:'t7', f:{l:'১২ মি.', b:'?', h:'১৩ মি.'}, q:'১২ মিটার উঁচু একটি খুঁটির মাথা থেকে ১৩ মিটার লম্বা একটি তার মাটিতে টানা হয়েছে। খুঁটির গোড়া থেকে তারের মাটির প্রান্ত কত দূরে?', o:['৫ মিটার','১ মিটার','২৫ মিটার','৭ মিটার'], a:0,
+  e:'তার হলো অতিভুজ (১৩ মি.), খুঁটি লম্ব (১২ মি.)। দূরত্ব² = ১৩² − ১২² = ১৬৯ − ১৪৪ = ২৫, তাই দূরত্ব = ৫ মিটার।'},
+ {t:'t8', q:'একটি সমবাহু ত্রিভুজের প্রতিটি বাহু ৬ সেমি। এর উচ্চতা কত?', o:['৩√৩ সেমি','৬√৩ সেমি','৩√২ সেমি','৯ সেমি'], a:0,
+  e:'উচ্চতা ভূমিকে সমান দুই ভাগে ভাগ করে (৩ সেমি + ৩ সেমি)। উচ্চতা² = ৬² − ৩² = ৩৬ − ৯ = ২৭, তাই উচ্চতা = √২৭ = ৩√৩ সেমি।'},
+ {t:'t8', q:'একটি সমদ্বিবাহু ত্রিভুজের সমান বাহু দুটি ১৩ সেমি করে এবং ভূমি ১০ সেমি। ভূমির উপর অঙ্কিত উচ্চতা কত?', o:['১২ সেমি','৮ সেমি','১০ সেমি','১৮ সেমি'], a:0,
+  e:'উচ্চতা ভূমিকে সমদ্বিখণ্ডিত করে, অর্ধেক ভূমি ৫ সেমি। উচ্চতা² = ১৩² − ৫² = ১৬৯ − ২৫ = ১৪৪, তাই উচ্চতা = ১২ সেমি। পুরো ভূমি ১০ ধরলে ভুল উত্তর আসে।'},
+ {t:'t8', q:'XY সমতলে (১, ২) ও (৫, ৫) বিন্দু দুটির দূরত্ব কত?', o:['৫ একক','৭ একক','২৫ একক','৩ একক'], a:0,
+  e:'অনুভূমিক পার্থক্য = ৫ − ১ = ৪, উলম্ব পার্থক্য = ৫ − ২ = ৩। দূরত্ব² = ৪² + ৩² = ২৫, তাই দূরত্ব = ৫ একক। ৭ হলো পার্থক্য দুটির যোগফল।'},
+ {t:'t6', q:'একটি রম্বসের কর্ণ দুটির দৈর্ঘ্য ১২ সেমি ও ১৬ সেমি। রম্বসের এক বাহুর দৈর্ঘ্য কত?', o:['১০ সেমি','১৪ সেমি','২০ সেমি','৭ সেমি'], a:0,
+  e:'রম্বসের কর্ণ দুটি পরস্পরকে সমকোণে সমদ্বিখণ্ডিত করে, তাই অর্ধেক কর্ণ ৬ সেমি ও ৮ সেমি। বাহু² = ৬² + ৮² = ৩৬ + ৬৪ = ১০০, তাই বাহু = ১০ সেমি।'},
+ {t:'t3', q:'একটি সমকোণী ত্রিভুজের লম্ব ও ভূমির অনুপাত ৫ : ১২ এবং অতিভুজ ২৬ সেমি। ছোট বাহুটির দৈর্ঘ্য কত?', o:['১০ সেমি','১২ সেমি','২৪ সেমি','১৩ সেমি'], a:0,
+  e:'বাহু দুটি ৫k ও ১২k ধরলে অতিভুজ² = (৫k)² + (১২k)² = ১৬৯k², অর্থাৎ অতিভুজ = ১৩k। ১৩k = ২৬ হলে k = ২। ছোট বাহু = ৫ × ২ = ১০ সেমি (বড় বাহু ২৪ সেমি)।'}
+];
+
+/* ---------- helpers ---------- */
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const fmt = s => bn(String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'));
+let S = null;
+let keyHandlerOn = false;
+
+function newExam(list, name){
+  if(S && S.timer) clearInterval(S.timer);
+  const total = list.length * 90;
+  S = {name, items:list.map(q=>({q, order:shuffle([0,1,2,3]), pick:null})), idx:0, total, left:total, t0:Date.now(), timer:null, confirm:false, done:false, auto:false, elapsed:0};
+  S.timer = setInterval(()=>{
+    S.left = Math.max(0, S.total - Math.floor((Date.now()-S.t0)/1000));
+    const el = document.getElementById('timer');
+    if(el){ el.textContent = fmt(S.left); el.parentElement.classList.toggle('low', S.left<=300); }
+    if(S.left<=0) submit(true);
+  },1000);
+}
+
+function figSvg(f){
+  return `<div class="figwrap"><svg class="fig" viewBox="0 0 250 168" role="img" aria-label="সমকোণী ত্রিভুজ: লম্ব ${esc(f.l)}, ভূমি ${esc(f.b)}, অতিভুজ ${esc(f.h)}">
+    <path d="M64 130H204L64 22Z" fill="var(--c-soft)"/>
+    <path class="s-a" d="M64 130V22"/><path class="s-b" d="M64 130H204"/><path class="s-c" d="M204 130L64 22"/>
+    <path d="M64 118H76V130" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+    <text class="fl${f.l==='?'?' q':''}" x="52" y="82" text-anchor="end">${esc(f.l)}</text>
+    <text class="fl${f.b==='?'?' q':''}" x="134" y="156" text-anchor="middle">${esc(f.b)}</text>
+    <text class="fl${f.h==='?'?' q':''}" x="146" y="62" text-anchor="start">${esc(f.h)}</text>
+  </svg>
+  <ul class="fleg"><li><i style="background:var(--a)"></i>লম্ব</li><li><i style="background:var(--b)"></i>ভূমি</li><li><i style="background:var(--c)"></i>অতিভুজ</li></ul>
+  <span class="fnote">চিত্র স্কেল অনুযায়ী আঁকা নয়</span></div>`;
+}
+
+const HERO = `<svg viewBox="0 0 200 220" role="img" aria-label="৩, ৪, ৫ বাহুর সমকোণী ত্রিভুজ ও তিন বাহুর উপর তিনটি বর্গ">
+  <rect class="sq sq1" x="10" y="82" width="54" height="54" fill="var(--a)" fill-opacity=".28" stroke="var(--a)" stroke-width="2.5"/>
+  <rect class="sq sq2" x="64" y="136" width="72" height="72" fill="var(--b)" fill-opacity=".3" stroke="var(--b)" stroke-width="2.5"/>
+  <polygon class="sq sq3" points="136,136 64,82 118,10 190,64" fill="var(--c)" fill-opacity=".26" stroke="var(--c)" stroke-width="2.5"/>
+  <polygon points="64,136 136,136 64,82" fill="var(--surface)" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M73 136V127H64" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+  <text class="hn" x="37" y="109">৯</text><text class="hn" x="100" y="172">১৬</text><text class="hn" x="127" y="73">২৫</text>
+</svg>`;
+
+/* ---------- screens ---------- */
+function renderStart(){
+  $app.innerHTML = `
+  <section class="card hero">
+    ${HERO}
+    <div>
+      <div class="eyebrow">অনলাইন মডেল টেস্ট</div>
+      <h1>পিথাগোরাসের উপপাদ্য</h1>
+      <div class="eq" aria-label="a বর্গ যোগ b বর্গ সমান c বর্গ"><span class="ea">a²</span><i>+</i><span class="eb">b²</span><i>=</i><span class="ec">c²</span></div>
+      <p class="sub">বেসিক থেকে স্ট্যান্ডার্ড লেভেল পর্যন্ত। পরীক্ষা শেষে দেখতে পাবে কোন বিষয়টি দুর্বল।</p>
+    </div>
+  </section>
+  <section class="card" style="display:grid;gap:16px">
+    <div class="facts">
+      <div class="fact"><b>${bn(20)}</b><span>টি MCQ</span></div>
+      <div class="fact"><b>${bn(30)}</b><span>মিনিট</span></div>
+      <div class="fact"><b>${bn(8)}</b><span>বিষয়</span></div>
+    </div>
+    <ul class="rules">
+      <li>প্রতিটি সঠিক উত্তরে ১ নম্বর, ভুল উত্তরে নম্বর কাটা যাবে না।</li>
+      <li>জমা দেওয়ার আগে যেকোনো প্রশ্নে ফিরে গিয়ে উত্তর বদলানো যাবে।</li>
+      <li>সময় শেষ হলে উত্তরগুলো নিজে থেকেই জমা হবে।</li>
+    </ul>
+    <div>
+      <label class="lb" for="nm">তোমার নাম</label>
+      <input type="text" id="nm" maxlength="30" placeholder="যেমন: রাহি আহমেদ" autocomplete="name" value="${esc((S&&S.name)||'')}">
+    </div>
+    <button class="btn go" data-act="start">পরীক্ষা শুরু করো</button>
+  </section>`;
+}
+
+function renderQuiz(){
+  const n = S.items.length, it = S.items[S.idx], q = it.q;
+  const answered = S.items.filter(x=>x.pick!==null).length;
+  const un = n - answered;
+  $app.innerHTML = `
+  <div class="qbar">
+    <div class="qtop"><span class="qno">প্রশ্ন ${bn(S.idx+1)} / ${bn(n)}</span><span class="timer${S.left<=300?' low':''}"><small>সময়</small><b id="timer">${fmt(S.left)}</b></span></div>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${answered}"><i style="width:${answered/n*100}%"></i></div>
+    <div class="qmeta">${bn(answered)}টি প্রশ্নের উত্তর দেওয়া হয়েছে</div>
+  </div>
+  <section class="card">
+    <span class="tag"><i></i>${TOPICS[q.t].n}</span>
+    <h2 class="qtext">${esc(q.q)}</h2>
+    ${q.f ? figSvg(q.f) : ''}
+    <div class="opts" role="radiogroup" aria-label="উত্তর বেছে নাও">
+      ${it.order.map((oi,pos)=>`<button class="opt" role="radio" aria-checked="${it.pick===oi}" data-act="pick" data-i="${oi}"><span class="k">${LET[pos]}</span><span class="ot">${esc(q.o[oi])}</span></button>`).join('')}
+    </div>
+    <div class="nav">
+      <button class="btn ghost" data-act="prev" ${S.idx===0?'disabled':''}>আগের প্রশ্ন</button>
+      ${S.idx<n-1 ? `<button class="btn go" data-act="next">পরের প্রশ্ন</button>` : `<button class="btn go" data-act="ask">জমা দাও</button>`}
+    </div>
+  </section>
+  <section class="card">
+    <h3 class="h3">প্রশ্নের তালিকা</h3>
+    <div class="pal">
+      ${S.items.map((x,i)=>`<button class="chip${i===S.idx?' cur':x.pick!==null?' done':''}" data-act="goto" data-n="${i}" aria-label="প্রশ্ন ${bn(i+1)}${x.pick!==null?', উত্তর দেওয়া হয়েছে':''}">${bn(i+1)}</button>`).join('')}
+    </div>
+    <button class="btn ghost" style="margin-top:16px;width:100%" data-act="ask">পরীক্ষা জমা দাও</button>
+  </section>
+  ${S.confirm ? `<section class="card confirm">
+    <p><b>${un>0?bn(un)+'টি প্রশ্নের উত্তর দেওয়া হয়নি।':'সব প্রশ্নের উত্তর দেওয়া হয়েছে।'}</b> ${un>0?'এখন জমা দিলে এগুলো ভুল ধরা হবে।':''} জমা দেওয়ার পর উত্তর বদলানো যাবে না।</p>
+    <div class="row"><button class="btn ghost" data-act="cancel">ফিরে যাই</button><button class="btn go" data-act="submit">জমা দিই</button></div>
+  </section>` : ''}`;
+}
+
+function submit(auto){
+  if(S.done) return;
+  clearInterval(S.timer);
+  S.done = true; S.auto = !!auto; S.confirm = false;
+  S.elapsed = Math.min(S.total, Math.round((Date.now()-S.t0)/1000));
+  renderResult();
+  window.scrollTo(0,0);
+}
+
+function renderResult(){
+  const n = S.items.length;
+  const right = S.items.filter(x=>x.pick===x.q.a).length;
+  const skipped = S.items.filter(x=>x.pick===null).length;
+  const wrong = n - right - skipped;
+  const pct = right/n;
+  const C = 2*Math.PI*54;
+  const col = pct>=.7 ? 'var(--good)' : pct>=.5 ? 'var(--warn)' : 'var(--bad)';
+  const msg = pct>=.9 ? 'অসাধারণ! উপপাদ্যটি ভালোভাবে আয়ত্তে আছে।' : pct>=.7 ? 'চমৎকার! সামান্য অনুশীলনেই পুরো দখল আসবে।' : pct>=.5 ? 'মোটামুটি ভালো। নিচের দুর্বল জায়গাগুলো আবার দেখে নাও।' : 'আরও অনুশীলন দরকার। নিচের পরামর্শগুলো দেখে আবার চেষ্টা করো।';
+  const stat = {};
+  S.items.forEach(x=>{const s = stat[x.q.t] || (stat[x.q.t]={c:0,n:0}); s.n++; if(x.pick===x.q.a) s.c++;});
+  const keys = Object.keys(TOPICS).filter(k=>stat[k]);
+  const weak = keys.filter(k=>stat[k].c<stat[k].n);
+  const m = Math.floor(S.elapsed/60), sec = S.elapsed%60;
+
+  $app.innerHTML = `
+  <section class="card">
+    <div class="score">
+      <div class="ring"><svg viewBox="0 0 130 130" aria-hidden="true"><circle cx="65" cy="65" r="54" fill="none" stroke="var(--line)" stroke-width="12"/><circle cx="65" cy="65" r="54" fill="none" stroke="${col}" stroke-width="12" stroke-linecap="round" stroke-dasharray="${(C*pct).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 65 65)"/></svg>
+        <div class="rt"><b>${bn(right)}/${bn(n)}</b><span>${bn(Math.round(pct*100))}%</span></div></div>
+      <div>
+        <p class="eyebrow">${S.name?esc(S.name)+' এর ফলাফল':'ফলাফল'}</p>
+        <h2>${msg}</h2>
+        ${S.auto?'<p class="sub">সময় শেষ হওয়ায় উত্তরগুলো নিজে থেকে জমা হয়েছে।</p>':`<p class="sub">সময় লেগেছে ${bn(m)} মিনিট ${bn(sec)} সেকেন্ড।</p>`}
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat g"><b>${bn(right)}</b><span>সঠিক</span></div>
+      <div class="stat r"><b>${bn(wrong)}</b><span>ভুল</span></div>
+      <div class="stat"><b>${bn(skipped)}</b><span>বাকি</span></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3 class="h3">বিষয়ভিত্তিক ফলাফল</h3>
+    <div style="margin-top:8px">
+      ${keys.map(k=>{const s=stat[k], p=s.c/s.n; const cls=p===1?'s':p>=.5?'m':'w'; const lab=p===1?'শক্তিশালী':p>=.5?'আরও অনুশীলন':'দুর্বল'; const bc=p===1?'var(--good)':p>=.5?'var(--warn)':'var(--bad)';
+        return `<div class="tp"><span class="nm">${TOPICS[k].n}</span><span class="pill ${cls}" style="justify-self:end">${bn(s.c)}/${bn(s.n)} · ${lab}</span><div class="meter"><i style="width:${Math.max(p*100,4)}%;background:${bc}"></i></div></div>`;}).join('')}
+    </div>
+    ${weak.length ? `<div class="tips">${weak.map(k=>`<div class="tip"><b>${TOPICS[k].n}</b>${TOPICS[k].tip}</div>`).join('')}</div>` : `<div class="tip" style="margin-top:14px"><b>কোনো দুর্বলতা নেই</b>সব বিষয়ে পূর্ণ নম্বর পেয়েছ।</div>`}
+  </section>
+
+  <section class="card">
+    <h3 class="h3">প্রতিটি প্রশ্নের উত্তর ও ব্যাখ্যা</h3>
+    <div style="margin-top:12px">
+      ${S.items.map((x,i)=>reviewItem(x,i)).join('')}
+    </div>
+  </section>
+
+  <div class="row">
+    ${wrong+skipped>0 ? `<button class="btn go" data-act="retry-wrong">ভুলগুলো আবার করো</button>` : ''}
+    <button class="btn ghost" data-act="retry">নতুন করে পরীক্ষা দাও</button>
+    <button class="btn ghost" data-act="copy">ফলাফল কপি করো</button>
+  </div>`;
+}
+
+function reviewItem(x,i){
+  const q = x.q, ok = x.pick===q.a, none = x.pick===null;
+  const pill = ok ? '<span class="pill s">সঠিক</span>' : none ? '<span class="pill m">উত্তর দেওয়া হয়নি</span>' : '<span class="pill w">ভুল</span>';
+  return `<details class="rv"${ok?'':' open'}>
+    <summary><span>প্রশ্ন ${bn(i+1)}</span>${pill}<span class="tag" style="margin-left:auto"><i></i>${TOPICS[q.t].n}</span></summary>
+    <div class="rvb">
+      <div class="qt">${esc(q.q)}</div>
+      ${q.f ? figSvg(q.f) : ''}
+      ${x.order.map((oi,pos)=>{
+        const isA = oi===q.a, isP = oi===x.pick;
+        const cls = isA ? 'ro ok' : isP ? 'ro no' : 'ro';
+        const tag = isA ? '<small>সঠিক উত্তর</small>' : isP ? '<small>তোমার উত্তর</small>' : '';
+        return `<div class="${cls}"><span class="k">${LET[pos]}</span><span class="ot">${esc(q.o[oi])}</span>${tag}</div>`;
+      }).join('')}
+      <div class="exp"><b>ব্যাখ্যা</b>${q.e}</div>
+    </div>
+  </details>`;
+}
+
+/* ---------- actions ---------- */
+function toast(t){
+  document.querySelectorAll('.toast').forEach(e=>e.remove());
+  const d = document.createElement('div'); d.className='toast'; d.setAttribute('role','status'); d.textContent=t;
+  document.body.appendChild(d); setTimeout(()=>d.remove(),2200);
+}
+async function copyText(t){
+  try{ await navigator.clipboard.writeText(t); return true; }
+  catch(e){
+    const ta=document.createElement('textarea'); ta.value=t; ta.style.cssText='position:fixed;opacity:0;left:0;top:0';
+    document.body.appendChild(ta); ta.select(); let ok=false;
+    try{ ok=document.execCommand('copy'); }catch(e2){}
+    ta.remove(); return ok;
+  }
+}
+function resultText(){
+  const n=S.items.length, right=S.items.filter(x=>x.pick===x.q.a).length;
+  const stat={}; S.items.forEach(x=>{const s=stat[x.q.t]||(stat[x.q.t]={c:0,n:0}); s.n++; if(x.pick===x.q.a)s.c++;});
+  const weak=Object.keys(TOPICS).filter(k=>stat[k]&&stat[k].c<stat[k].n).map(k=>TOPICS[k].n);
+  return `পিথাগোরাসের উপপাদ্য কুইজ\n${S.name?'নাম: '+S.name+'\n':''}স্কোর: ${bn(right)}/${bn(n)} (${bn(Math.round(right/n*100))}%)\n${weak.length?'আরও অনুশীলন দরকার: '+weak.join(', '):'সব বিষয়ে পূর্ণ নম্বর'}`;
+}
+
+$app.addEventListener('click', async e=>{
+  const b = e.target.closest('[data-act]'); if(!b) return;
+  const a = b.dataset.act;
+  if(a==='start'){
+    const name = (document.getElementById('nm').value||'').trim();
+    newExam(Q, name); renderQuiz(); window.scrollTo(0,0);
+  } else if(a==='pick'){
+    const y = window.scrollY;
+    S.items[S.idx].pick = +b.dataset.i; S.confirm=false; renderQuiz(); window.scrollTo(0,y);
+    const sel = $app.querySelector('.opt[aria-checked="true"]'); if(sel) sel.focus({preventScroll:true});
+  } else if(a==='next'){ S.idx=Math.min(S.items.length-1,S.idx+1); S.confirm=false; renderQuiz(); window.scrollTo(0,0); }
+  else if(a==='prev'){ S.idx=Math.max(0,S.idx-1); S.confirm=false; renderQuiz(); window.scrollTo(0,0); }
+  else if(a==='goto'){ S.idx=+b.dataset.n; S.confirm=false; renderQuiz(); window.scrollTo(0,0); }
+  else if(a==='ask'){ S.confirm=true; renderQuiz(); const c=$app.querySelector('.confirm'); if(c) c.scrollIntoView({behavior:'smooth',block:'center'}); }
+  else if(a==='cancel'){ S.confirm=false; renderQuiz(); }
+  else if(a==='submit'){ submit(false); }
+  else if(a==='retry'){ newExam(Q, S.name); renderQuiz(); window.scrollTo(0,0); }
+  else if(a==='retry-wrong'){
+    const list = S.items.filter(x=>x.pick!==x.q.a).map(x=>x.q);
+    newExam(list, S.name); renderQuiz(); window.scrollTo(0,0);
+  } else if(a==='copy'){
+    const ok = await copyText(resultText());
+    toast(ok ? 'ফলাফল কপি হয়েছে' : 'কপি করা যায়নি, লেখাটি নিজে নকল করো');
+  }
+});
+
+$app.addEventListener('keydown', e=>{
+  if(e.target.id==='nm' && e.key==='Enter'){ e.preventDefault(); $app.querySelector('[data-act="start"]').click(); }
+});
+document.addEventListener('keydown', e=>{
+  if(!S || S.done || e.target.tagName==='INPUT') return;
+  if(['1','2','3','4'].includes(e.key)){
+    const oi = S.items[S.idx].order[+e.key-1];
+    const btn = $app.querySelector(`.opt[data-i="${oi}"]`); if(btn) btn.click();
+  } else if(e.key==='ArrowRight'){ const nb=$app.querySelector('[data-act="next"]'); if(nb) nb.click(); }
+  else if(e.key==='ArrowLeft'){ const pb=$app.querySelector('[data-act="prev"]'); if(pb && !pb.disabled) pb.click(); }
+});
+
+renderStart();
+</script>
+
+</body></html>
