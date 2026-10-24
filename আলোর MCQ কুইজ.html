@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>আলোর MCQ কুইজ</title>
+<style>
+:root{--bg:#0e1330;--bg2:#1b1250;--card:#ffffff14;--bd:#ffffff26;--tx:#f3f5ff;--mut:#aab2e0;--acc:#ffd23f;--ok:#22d39a;--no:#ff5c7a;--pri:#6c63ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{height:100%}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;font-family:"Hind Siliguri","Noto Sans Bengali","Kalpurush",system-ui,sans-serif;color:var(--tx);background:radial-gradient(circle at 15% 10%,#3b2a9a 0,transparent 45%),radial-gradient(circle at 90% 90%,#0b6b8a 0,transparent 45%),linear-gradient(160deg,var(--bg),var(--bg2));background-attachment:fixed}
+.wrap{max-width:640px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:20px;backdrop-filter:blur(12px)}
+h1{font-size:28px;margin:8px 0}
+.prism{display:block;margin:0 auto 6px}
+.rules{list-style:none;padding:0;margin:14px 0;color:var(--mut);line-height:1.9}
+.rules li:before{content:"✦ ";color:var(--acc)}
+button{font:inherit;cursor:pointer}
+.btn{width:100%;padding:14px;border:0;border-radius:14px;font-weight:700;font-size:18px;color:#1b1250;background:linear-gradient(90deg,var(--acc),#ff9f43)}
+.btn:disabled{opacity:.5}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.pill{padding:6px 14px;border-radius:99px;background:var(--card);border:1px solid var(--bd);font-weight:700}
+#timer.low{color:var(--no);animation:p 1s infinite}
+@keyframes p{50%{opacity:.4}}
+.bar{height:8px;border-radius:9px;background:#ffffff1f;overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--acc));transition:width .3s}
+.q{font-size:19px;line-height:1.6;margin:0 0 14px;font-weight:600}
+.opt{display:flex;gap:10px;width:100%;text-align:left;padding:13px 14px;margin-bottom:10px;border-radius:14px;border:1.5px solid var(--bd);background:#ffffff0d;color:var(--tx);font-size:16px;line-height:1.5}
+.opt b{min-width:26px;height:26px;border-radius:50%;background:#ffffff22;display:grid;place-items:center;font-size:14px}
+.opt:active:not(:disabled){transform:scale(.98)}
+.opt:disabled{cursor:default}
+.opt.ok{background:#22d39a30;border-color:var(--ok)}
+.opt.ok b{background:var(--ok);color:#06281d}
+.opt.no{background:#ff5c7a30;border-color:var(--no)}
+.opt.no b{background:var(--no);color:#2a0710}
+.fb{margin:6px 0 14px;padding:12px 14px;border-radius:14px;line-height:1.6;display:none}
+.fb.ok{display:block;background:#22d39a22;color:#9bffd8}
+.fb.no{display:block;background:#ff5c7a22;color:#ffc2cd}
+.score{font-size:64px;font-weight:800;text-align:center;color:var(--acc);margin:6px 0}
+.sum{display:flex;gap:8px;margin:12px 0}
+.sum div{flex:1;text-align:center;padding:10px 4px;border-radius:14px;background:var(--card);border:1px solid var(--bd)}
+.rv{margin-top:10px;padding:12px;border-radius:14px;border-left:4px solid var(--no);background:#ffffff0d;line-height:1.6;font-size:15px}
+.rv.g{border-color:var(--ok)}
+.hide{display:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="start" class="card">
+<svg class="prism" width="120" height="80" viewBox="0 0 120 80"><line x1="0" y1="44" x2="42" y2="44" stroke="#fff" stroke-width="3"/><polygon points="40,66 60,14 80,66" fill="#ffffff22" stroke="#fff" stroke-width="2"/><g stroke-width="3"><line x1="66" y1="52" x2="120" y2="62" stroke="#ff5c7a"/><line x1="66" y1="52" x2="120" y2="52" stroke="#ffd23f"/><line x1="66" y1="52" x2="120" y2="42" stroke="#22d39a"/><line x1="66" y1="52" x2="120" y2="32" stroke="#6c63ff"/></g></svg>
+<h1 style="text-align:center">আলোর MCQ কুইজ</h1>
+<p style="text-align:center;color:var(--mut);margin:0">প্রতিফলন · প্রতিসরণ · সংকট কোণ · পূর্ণ অভ্যন্তরীণ প্রতিফলন</p>
+<ul class="rules"><li>মোট ২০টি প্রশ্ন, প্রতিটি ১ নম্বর</li><li>সময়: ২০ মিনিট</li><li>উত্তর একবার দিলে বদলানো যাবে না</li><li>পেছনে যাওয়া যাবে না</li><li>ভুল হলে নিচে সঠিক উত্তর দেখাবে</li></ul>
+<button class="btn" onclick="begin()">কুইজ শুরু করো</button>
+</div>
+
+<div id="quiz" class="hide">
+<div class="top"><span class="pill" id="cnt">১/২০</span><span class="pill" id="score">স্কোর: ০</span><span class="pill" id="timer">২০:০০</span></div>
+<div class="bar"><i id="bar"></i></div>
+<div class="card">
+<p class="q" id="q"></p>
+<div id="opts"></div>
+<div class="fb" id="fb"></div>
+<button class="btn" id="next" onclick="next()" disabled>পরবর্তী প্রশ্ন</button>
+</div>
+</div>
+
+<div id="end" class="hide card">
+<h1 style="text-align:center" id="msg"></h1>
+<div class="score" id="fs"></div>
+<div class="sum"><div>সঠিক<br><b id="c1" style="color:var(--ok);font-size:22px"></b></div><div>ভুল<br><b id="c2" style="color:var(--no);font-size:22px"></b></div><div>উত্তর দেওয়া হয়নি<br><b id="c3" style="font-size:22px"></b></div></div>
+<div id="rev"></div>
+<button class="btn" style="margin-top:16px" onclick="location.reload()">আবার চেষ্টা করো</button>
+</div>
+
+</div>
+<script>
+const Q=[
+["আলোর প্রতিফলনের ক্ষেত্রে আপতন কোণ ও প্রতিফলন কোণের সম্পর্ক কী?",["আপতন কোণ > প্রতিফলন কোণ","আপতন কোণ < প্রতিফলন কোণ","আপতন কোণ = প্রতিফলন কোণ","কোনো সম্পর্ক নেই"],2,"প্রতিফলনের সূত্র অনুযায়ী আপতন কোণ সবসময় প্রতিফলন কোণের সমান।"],
+["সমতল দর্পণে সৃষ্ট প্রতিবিম্বের বৈশিষ্ট্য কোনটি?",["বাস্তব ও সোজা","অসদ ও সোজা","বাস্তব ও উল্টা","অসদ ও উল্টা"],1,"সমতল দর্পণে প্রতিবিম্ব অসদ (কাল্পনিক), সোজা ও বস্তুর সমান আকারের হয়।"],
+["আলো এক স্বচ্ছ মাধ্যম থেকে অন্য স্বচ্ছ মাধ্যমে যাওয়ার সময় দিক পরিবর্তন করলে তাকে কী বলে?",["প্রতিফলন","প্রতিসরণ","বিচ্ছুরণ","ব্যতিচার"],1,"মাধ্যম বদলের সময় আলোর দিক পরিবর্তনকে প্রতিসরণ বলে।"],
+["আপতিত রশ্মি, প্রতিফলিত রশ্মি ও আপতন বিন্দুতে অভিলম্ব—এই তিনটি কেমন তলে থাকে?",["ভিন্ন তলে","একই তলে","লম্ব তলে","সমান্তরাল তলে"],1,"প্রতিফলনের দ্বিতীয় সূত্র: তিনটিই একই তলে থাকে।"],
+["বায়ু থেকে কাচে আলো প্রবেশ করলে প্রতিসৃত রশ্মি অভিলম্বের দিকে কী করে?",["অভিলম্ব থেকে দূরে সরে যায়","অভিলম্বের দিকে বেঁকে যায়","সোজা চলে","ফিরে আসে"],1,"হালকা থেকে ঘন মাধ্যমে গেলে রশ্মি অভিলম্বের দিকে বেঁকে যায়।"],
+["প্রতিসরাঙ্ক (n) এর সংজ্ঞা কোনটি?",["sin r / sin i","sin i / sin r","cos i / cos r","tan i / tan r"],1,"স্নেলের সূত্র: n = sin i / sin r (i = আপতন কোণ, r = প্রতিসরণ কোণ)।"],
+["কোন মাধ্যমে আলোর বেগ সবচেয়ে বেশি?",["পানি","কাচ","বায়ু","হীরা"],2,"এখানে বায়ুর প্রতিসরাঙ্ক সবচেয়ে কম, তাই আলোর বেগ সবচেয়ে বেশি।"],
+["আলো ঘন মাধ্যম থেকে হালকা মাধ্যমে গেলে প্রতিসৃত রশ্মি কেমন হয়?",["অভিলম্বের দিকে বেঁকে যায়","অভিলম্ব থেকে দূরে সরে যায়","সোজা যায়","থেমে যায়"],1,"ঘন থেকে হালকা মাধ্যমে রশ্মি অভিলম্ব থেকে দূরে সরে যায়।"],
+["সংকট কোণে প্রতিসরণ কোণের মান কত?",["০°","৪৫°","৯০°","১৮০°"],2,"সংকট কোণে আপতিত হলে প্রতিসৃত রশ্মি দুই মাধ্যমের বিভেদতল ঘেঁষে যায়, অর্থাৎ প্রতিসরণ কোণ ৯০°।"],
+["সংকট কোণ কোন ক্ষেত্রে পাওয়া যায়?",["হালকা থেকে ঘন মাধ্যমে","ঘন থেকে হালকা মাধ্যমে","সবসময়","শুধু বায়ুতে"],1,"ঘন মাধ্যম থেকে হালকা মাধ্যমে আলো গেলেই সংকট কোণ পাওয়া যায়।"],
+["পূর্ণ অভ্যন্তরীণ প্রতিফলনের জন্য আপতন কোণ কেমন হতে হবে?",["সংকট কোণের চেয়ে ছোট","সংকট কোণের সমান","সংকট কোণের চেয়ে বড়","শূন্য"],2,"আপতন কোণ সংকট কোণের চেয়ে বড় হলে সম্পূর্ণ আলো ঘন মাধ্যমে ফিরে আসে।"],
+["নিচের কোনটি পূর্ণ অভ্যন্তরীণ প্রতিফলনের শর্ত?",["আলো হালকা থেকে ঘন মাধ্যমে যাবে","আলো ঘন থেকে হালকা মাধ্যমে যাবে ও আপতন কোণ > সংকট কোণ","আপতন কোণ শূন্য হবে","দুই মাধ্যম একই হবে"],1,"দুটি শর্ত: ঘন থেকে হালকা মাধ্যমে যাওয়া এবং আপতন কোণ > সংকট কোণ।"],
+["সংকট কোণ (C) ও প্রতিসরাঙ্কের (n) সম্পর্ক কোনটি?",["sin C = n","sin C = 1/n","cos C = 1/n","tan C = n"],1,"ঘন মাধ্যম থেকে বায়ুতে: n = 1/sin C, অর্থাৎ sin C = 1/n।"],
+["কাচের প্রতিসরাঙ্ক 1.5 হলে সংকট কোণের sin মান কত?",["0.5","0.67","1.5","0.33"],1,"sin C = 1/1.5 ≈ 0.67।"],
+["মরীচিকা সৃষ্টির প্রধান কারণ কোনটি?",["শুধু প্রতিফলন","পূর্ণ অভ্যন্তরীণ প্রতিফলন","আলোর বিচ্ছুরণ","ব্যতিচার"],1,"গরম বায়ুস্তরে আলো পূর্ণ অভ্যন্তরীণ প্রতিফলনের মাধ্যমে বেঁকে এসে পানির ভ্রম তৈরি করে।"],
+["অপটিক্যাল ফাইবারের কার্যনীতি কোনটি?",["প্রতিসরণ","বিচ্ছুরণ","পূর্ণ অভ্যন্তরীণ প্রতিফলন","বিবর্তন"],2,"অপটিক্যাল ফাইবারে আলো বারবার পূর্ণ অভ্যন্তরীণ প্রতিফলনের মাধ্যমে এগিয়ে যায়।"],
+["হীরা ঝকঝক করে মূলত কোন কারণে?",["উচ্চ প্রতিসরাঙ্ক ও ছোট সংকট কোণে পূর্ণ অভ্যন্তরীণ প্রতিফলন","কম প্রতিসরাঙ্ক","শুধু প্রতিফলন","শোষণ"],0,"হীরার প্রতিসরাঙ্ক বেশি (প্রায় 2.42), তাই সংকট কোণ ছোট এবং পূর্ণ অভ্যন্তরীণ প্রতিফলন সহজে ঘটে।"],
+["পানিতে আংশিক ডোবানো পেন্সিল বাঁকা দেখায় কেন?",["প্রতিফলন","প্রতিসরণ","বিচ্ছুরণ","শোষণ"],1,"পানি ও বায়ুর বিভেদতলে আলোর প্রতিসরণের ফলে পেন্সিল বাঁকা দেখায়।"],
+["অভিলম্ব বরাবর আপতিত আলোর প্রতিসরণ কোণ কত?",["০°","৪৫°","৯০°","সংকট কোণ"],0,"আপতন কোণ ০° হলে আলো সোজা চলে যায়, প্রতিসরণ কোণও ০°।"],
+["পানির প্রতিসরাঙ্ক 4/3 হলে পানিতে আলোর বেগ বায়ুর বেগের কত গুণ?",["4/3","3/4","1","2"],1,"n = c/v, সুতরাং v = c/n = (3/4)c।"]
+];
+const S=n=>String(n).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+const L=["ক","খ","গ","ঘ"];
+let i=0,sc=0,t=1200,tm,done=false,log=[];
+const $=id=>document.getElementById(id);
+function begin(){$("start").classList.add("hide");$("quiz").classList.remove("hide");tick();tm=setInterval(tick,1000);show()}
+function tick(){const m=Math.floor(t/60),s=t%60;$("timer").textContent=S(String(m).padStart(2,"0"))+":"+S(String(s).padStart(2,"0"));$("timer").classList.toggle("low",t<=60);if(t--<=0){clearInterval(tm);finish()}}
+function show(){done=false;const q=Q[i];$("cnt").textContent=S(i+1)+"/"+S(Q.length);$("bar").style.width=(i/Q.length*100)+"%";$("q").textContent=S(i+1)+". "+q[0];$("fb").className="fb";$("next").disabled=true;$("next").textContent=i==Q.length-1?"ফলাফল দেখো":"পরবর্তী প্রশ্ন";
+const o=$("opts");o.innerHTML="";q[1].forEach((x,k)=>{const b=document.createElement("button");b.className="opt";b.innerHTML="<b>"+L[k]+"</b><span></span>";b.lastChild.textContent=x;b.onclick=()=>pick(k);o.appendChild(b)})}
+function pick(k){if(done)return;done=true;const q=Q[i],bs=[...$("opts").children];bs.forEach(b=>b.disabled=true);bs[q[2]].classList.add("ok");const fb=$("fb");
+if(k==q[2]){sc++;fb.className="fb ok";fb.textContent="✔ সঠিক! "+q[3]}else{bs[k].classList.add("no");fb.className="fb no";fb.textContent="✘ ভুল। সঠিক উত্তর: "+L[q[2]]+") "+q[1][q[2]]+" — "+q[3]}
+log[i]=k;$("score").textContent="স্কোর: "+S(sc);$("next").disabled=false}
+function next(){if(!done)return;i++;i<Q.length?show():(clearInterval(tm),finish())}
+function finish(){$("quiz").classList.add("hide");$("end").classList.remove("hide");const ans=log.filter(x=>x!==undefined).length,wr=ans-sc;
+$("fs").textContent=S(sc)+"/"+S(Q.length);$("c1").textContent=S(sc);$("c2").textContent=S(wr);$("c3").textContent=S(Q.length-ans);
+$("msg").textContent=t<0&&ans<Q.length?"⏰ সময় শেষ!":sc>=17?"🏆 অসাধারণ!":sc>=12?"👏 ভালো করেছ!":sc>=8?"🙂 আরও একটু অনুশীলন করো":"📘 আবার পড়ে চেষ্টা করো";
+const r=$("rev");Q.forEach((q,n)=>{if(log[n]===q[2])return;const d=document.createElement("div");d.className="rv";const k=log[n];d.textContent=S(n+1)+". "+q[0]+" — "+(k===undefined?"উত্তর দেওয়া হয়নি":"তোমার উত্তর: "+q[1][k])+" | সঠিক: "+q[1][q[2]];r.appendChild(d)});
+if(!r.children.length)r.innerHTML='<div class="rv g">সবগুলো উত্তর সঠিক! 🎉</div>'}
+</script>
+</body>
+</html>
